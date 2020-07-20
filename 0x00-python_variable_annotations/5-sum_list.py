@@ -2,6 +2,10 @@
 """ Python typing annotations """
 
 
-def sum_list(input_list: list[float]) -> float:
+from typing import List
+from functools import reduce
+
+
+def sum_list(input_list: List[float]) -> float:
     """ Sum a list of floats """
     return reduce(lambda x, y: x+y, input_list)
