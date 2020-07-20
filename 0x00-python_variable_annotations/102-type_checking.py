@@ -6,6 +6,7 @@ from typing import Tuple, List
 
 
 def zoom_array(lst: Tuple, factor: int = 2) -> List:
+    """ I have no idea what this does. """
     zoomed_in: List = [
         item for item in list(lst)
         for i in range(factor)
