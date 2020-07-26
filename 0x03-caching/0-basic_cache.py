@@ -5,7 +5,7 @@
 BaseCaching = __import__("base_caching").BaseCaching
 
 
-class BasicCache extends BaseCaching:
+class BasicCache(BaseCaching):
     """ no limit cache """
 
     def put(self, key, item):
