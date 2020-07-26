@@ -17,12 +17,16 @@ class LRUCache(BaseCaching):
         """ put an item in """
         if item is None or key is None:
             return
-        if len(self.keys_in) == BaseCaching.MAX_ITEMS:
+
+        current = key in self.keys_in
+        if len(self.keys_in) == BaseCaching.MAX_ITEMS and not current:
             k = self.keys_in[0]
             print("DISCARD: " + str(k))
             del self.cache_data[k]
             self.keys_in = self.keys_in[1:]
 
+        if current:
+            self.keys_in.remove(key)
         self.keys_in.append(key)
         self.cache_data[key] = item
 
@@ -31,6 +35,6 @@ class LRUCache(BaseCaching):
         if key is None:
             return
         if key in self.keys_in:
-            k = self.keys_in.remove(key)
-            self.keys_in.append(k)
+            self.keys_in.remove(key)
+            self.keys_in.append(key)
         return self.cache_data.get(key, None)
