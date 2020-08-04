@@ -82,6 +82,10 @@ def main() -> None:
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
     for row in cursor:
+        mess = "name={}; email={}; phone={}; ssn={}; password={}; ip={}; "
+        mess = mess + "last_login={}; user_agent={};"
+        mess = mess.format(row[0], row[1], row[2], row[3],
+                           row[4], row[5], row[6], row[7])
         log.info(row)
     cursor.close()
     db.close()
