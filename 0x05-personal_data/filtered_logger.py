@@ -5,6 +5,8 @@
 from typing import List
 import re
 import logging
+import os
+import mysql-connector-python
 
 
 class RedactingFormatter(logging.Formatter):
@@ -46,6 +48,22 @@ def get_logger() -> logging.Logger:
     log.addHandler(h)
 
     return logging.Logger()
+
+
+def get_db():
+    """ get the database connection """
+    user = os.environ.get('PERSONAL_DATA_DB_USERNAME', None)
+    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', None)
+    dbhost = os.environ.get('PERSONAL_DATA_DB_HOST', None)
+    dbname = os.environ.get('PERSONAL_DATA_DB_NAME', None)
+    if user is None or password is None or dbhost is None or dbname is None:
+        return None
+
+    db = mysql.connector.connect(user=user,
+                                 password=password,
+                                 host=dbhost,
+                                 database=dbname)
+    return db
 
 
 def filter_datum(fields: List[str], redaction: str,
