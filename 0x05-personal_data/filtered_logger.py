@@ -73,3 +73,19 @@ def filter_datum(fields: List[str], redaction: str,
     for x in fields:
         mess = re.sub(x+"=.*?"+separator, x+"="+redaction+separator, mess)
     return mess
+
+
+def main() -> None:
+    """ Get all users from db and then print them redacted """
+    db = get_db()
+    log = get_logger()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    for row in cursor:
+        log.info(row)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
