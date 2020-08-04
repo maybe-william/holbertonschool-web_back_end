@@ -47,7 +47,7 @@ def get_logger() -> logging.Logger:
 
     log.addHandler(h)
 
-    return logging.Logger()
+    return log
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
