@@ -6,7 +6,7 @@ from typing import List
 import re
 import logging
 import os
-import mysql-connector-python
+import mysql.connector
 
 
 class RedactingFormatter(logging.Formatter):
@@ -50,7 +50,7 @@ def get_logger() -> logging.Logger:
     return logging.Logger()
 
 
-def get_db():
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """ get the database connection """
     user = os.environ.get('PERSONAL_DATA_DB_USERNAME', None)
     password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', None)
