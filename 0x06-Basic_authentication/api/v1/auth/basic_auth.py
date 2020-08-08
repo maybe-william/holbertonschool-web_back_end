@@ -8,4 +8,12 @@ from typing import List, TypeVar
 
 class BasicAuth(Auth):
     """The basic auth class"""
-    pass
+
+    def extract_base64_authorization_header(self,
+                                            authorization_header: str) -> str:
+        """ return base64 part of auth header """
+        if authorization_header is None or type(authorization_header) != str:
+            return None
+        if authorization_header[:6] == "Basic ":
+            return authorization_header[6:]
+        return None
