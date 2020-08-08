@@ -20,10 +20,10 @@ def before():
     """ Do this before a request
     """
     if auth is not None:
-        if auth.require_auth(request.path,
-                             ['/api/v1/status/',
-                              '/api/v1/unauthorized',
-                              '/api/v1/forbidden']):
+        excl = ['/api/v1/status/',
+                '/api/v1/unauthorized',
+                '/api/v1/forbidden']
+        if auth.require_auth(request.path, excl):
             if auth.authorization_header(request) is None:
                 abort(401)
             if auth.current_user(request) is None:
@@ -60,5 +60,5 @@ if __name__ == "__main__":
         auth = Auth()
     if auth_type == "basic_auth":
         from api.v1.auth.basic_auth import BasicAuth
-        auth = BasicAuth
+        auth = BasicAuth()
     app.run(host=host, port=port)

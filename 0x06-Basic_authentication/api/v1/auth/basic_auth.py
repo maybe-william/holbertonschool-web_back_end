@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """ auth module
 """
+from api.v1.auth.auth import Auth
 from flask import request
 from typing import List, TypeVar
-from api.v1.auth.auth import Auth
 
 
-class BasicAuth (Auth):
-    """The auth class"""
+class BasicAuth(Auth):
+    """The basic auth class"""
     pass
