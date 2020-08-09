@@ -13,8 +13,11 @@ class Auth:
         if path is None or excluded_paths is None or len(excluded_paths) == 0:
             return True
         nonslash = list([x[:-1] for x in excluded_paths if x[-1] == '/'])
+        stars = list([x[:-1] for x in excluded_paths if x[-1] == '*'])
         if path in excluded_paths or path in nonslash:
             return False
+        if len(stars) > 0:
+            return not any([path[:len(y)] == y for y in stars])
         return True
 
     def authorization_header(self, request=None) -> str:
