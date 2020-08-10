@@ -6,6 +6,7 @@ from models.user import User
 from flask import request
 from typing import List, TypeVar
 import base64
+from models.base import DATA
 
 
 class BasicAuth(Auth):
@@ -57,6 +58,9 @@ class BasicAuth(Auth):
             user_email: str,
             user_pwd: str) -> TypeVar('User'):
         """ get the user object from the credentials"""
+        if not DATA.get('User', False):
+            return None
+
         if user_email is None or type(user_email) != str:
             return None
         if user_pwd is None or type(user_pwd) != str:
