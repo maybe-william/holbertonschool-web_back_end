@@ -24,6 +24,7 @@ if auth_type == "session_auth":
     from api.v1.auth.session_auth import SessionAuth
     auth = SessionAuth()
 
+
 @app.before_request
 def before():
     """ Do this before a request
