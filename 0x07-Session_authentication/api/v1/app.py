@@ -26,6 +26,7 @@ if auth_type == "basic_auth":
 def before():
     """ Do this before a request
     """
+    request.current_user = auth.current_user(request)
     if auth is not None:
         excl = ['/api/v1/status/',
                 '/api/v1/unauthorized',
