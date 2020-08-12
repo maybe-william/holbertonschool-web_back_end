@@ -11,7 +11,7 @@ from os import environ
 def auth_login() -> str:
     """ POST /api/v1/auth_session/login
     Return:
-      - list of all User objects JSON represented
+      - User object JSON represented
     """
     email = request.form.get("email", None)
     if email is None:
@@ -31,3 +31,18 @@ def auth_login() -> str:
     cookie_name = environ.get("SESSION_NAME", None)
     ret.set_cookie(cookie_name, sess)
     return ret
+
+
+@app_views.route('/auth_session/logout',
+                 methods=['DELETE'],
+                 strict_slashes=False)
+def auth_logout() -> str:
+    """ DELETE /api/v1/auth_session/logout
+    Return:
+        - Empty JSON and 200 status
+    """
+    from api.v1.app import auth
+    succ = auth.destroy_session(request)
+    if not succ:
+        abort(404)
+    return jsonify({}), 200
