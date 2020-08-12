@@ -7,6 +7,8 @@ from os import environ
 from typing import List, TypeVar
 import base64
 import uuid
+from datetime import datetime
+from datetime import timedelta
 
 
 class SessionExpAuth(SessionAuth):
@@ -18,14 +20,14 @@ class SessionExpAuth(SessionAuth):
 
     def create_session(self, user_id=None):
         """ overloaded method """
-        sess = super(user_id)
+        sess = super().create_session(user_id)
         if sess is None:
             return None
         session_dictionary = {"user_id": user_id, "created_at": datetime.now()}
         SessionAuth.user_id_by_session_id[sess] = session_dictionary
         return sess
 
-    def user_id_by_session_id(self, session_id=None):
+    def user_id_for_session_id(self, session_id=None):
         """ overloaded method """
         if session_id is None:
             return None
@@ -37,6 +39,7 @@ class SessionExpAuth(SessionAuth):
         if "created_at" not in session_dictionary.keys():
             return None
         create_time = session_dictionary["created_at"]
-        if create_time + self.session_duration > datetime.now():
+        delta = timedelta(seconds=self.session_duration)
+        if (create_time + delta) < datetime.now():
             return None
         return session_dictionary["user_id"]

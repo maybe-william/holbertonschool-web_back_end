@@ -35,6 +35,8 @@ class SessionAuth(Auth):
         """ return user based on cookie value """
         sess = self.session_cookie(request)
         user_id = self.user_id_for_session_id(sess)
+        if type(user_id) == dict:
+            user_id = user_id["user_id"]
         return User.get(user_id)
 
     def destroy_session(self, request=None):
