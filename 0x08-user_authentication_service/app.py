@@ -99,10 +99,10 @@ def update_password_route() -> str:
     body = request.form
 
     email = body.get('email', '')
-    token = body.get('token', '')
+    token = body.get('reset_token', '')
     password = body.get('new_password', '')
     try:
-        token = AUTH.update_password(token, password)
+        AUTH.update_password(token, password)
         return jsonify({"email": email, "message": "Password updated"})
     except ValueError:
         abort(403)
