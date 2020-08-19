@@ -70,7 +70,7 @@ class Auth:
         pr = _generate_uuid()
         try:
             user = self._db.find_user_by(email=email)
-            self._db.update_user(user_id, reset_token=pr)
+            self._db.update_user(user.id, reset_token=pr)
             return pr
         except NoResultFound:
             raise ValueError
