@@ -24,7 +24,7 @@ def root_route() -> str:
 
 @app.route("/users", methods=['POST'], strict_slashes=False)
 def register_route() -> str:
-    """ get the root route
+    """ get the register route
     """
     body = request.form
 
@@ -37,7 +37,7 @@ def register_route() -> str:
 
 @app.route("/sessions", methods=['POST'], strict_slashes=False)
 def login_route() -> str:
-    """ get the root route
+    """ get the login route
     """
     body = request.form
 
@@ -49,6 +49,18 @@ def login_route() -> str:
     resp = make_response(jsonify({"email": email, "message": "logged in"}))
     resp.set_cookie('session_id', AUTH.create_session(email))
     return resp
+
+
+@app.route("/sessions", methods=['DELETE'], strict_slashes=False)
+def logout_route() -> str:
+    """ get the logout route
+    """
+    sess = request.cookies.get('session_id')
+    email_and_id = AUTH.get_user_from_session_id(sess)
+    if email_and_id is None:
+        abort(403)
+    AUTH.destroy_session(int(email_and_id.split(':')[1]))
+    return redirect('/')
 
 
 if __name__ == "__main__":
