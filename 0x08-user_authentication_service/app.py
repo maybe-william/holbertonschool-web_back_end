@@ -5,7 +5,7 @@ Auth Flask App
 
 
 import json
-from flask import Flask, jsonify, abort, request, make_response
+from flask import Flask, jsonify, abort, request, make_response, redirect
 from flask_cors import (CORS, cross_origin)
 from auth import Auth
 
