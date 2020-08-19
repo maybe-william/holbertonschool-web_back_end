@@ -10,7 +10,6 @@ def register_user(email: str, password: str) -> None:
     assert True
 
 
-
 def log_in_wrong_password(email: str, password: str) -> None:
     """ log wrong user """
     assert True
