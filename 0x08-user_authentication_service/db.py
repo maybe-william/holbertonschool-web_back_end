@@ -9,6 +9,7 @@ from user import Base, User
 
 
 class DB:
+    """ This class represents the DB """
 
     def __init__(self):
         """ This method inits the DB """
