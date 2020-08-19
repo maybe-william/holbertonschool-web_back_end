@@ -55,7 +55,9 @@ def login_route() -> str:
 def logout_route() -> str:
     """ get the logout route
     """
-    sess = request.cookies.get('session_id')
+    sess = request.cookies.get('session_id', None)
+    if sess is None:
+        abort(403)
     email_and_id = AUTH.get_user_from_session_id(sess)
     if email_and_id is None:
         abort(403)
