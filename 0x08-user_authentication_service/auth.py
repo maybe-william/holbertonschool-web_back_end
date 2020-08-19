@@ -38,6 +38,16 @@ class Auth:
             pass
         return False
 
+    def create_session(self, email: str) -> str:
+        """ create a session for a user """
+        u = _generate_uuid()
+        try:
+            user = self._db.find_user_by(email=email)
+            self._db.update_user(user.id, session_id=u)
+            return u
+        except NoResultFound:
+            return None
+
 
 def _hash_password(password: str) -> str:
     """ Hash a password """
