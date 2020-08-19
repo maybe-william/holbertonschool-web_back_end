@@ -101,6 +101,8 @@ def update_password_route() -> str:
     email = body.get('email', '')
     token = body.get('reset_token', '')
     password = body.get('new_password', '')
+    if email == '' or token = '' or password = '':
+        abort(403)
     try:
         AUTH.update_password(token, password)
         return jsonify({"email": email, "message": "Password updated"})
