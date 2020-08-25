@@ -2,9 +2,11 @@
 """ Test the utils """
 
 
+import requests
 import unittest
+from unittest.mock import patch, Mock
 from parameterized import parameterized, parameterized_class
-from utils import access_nested_map
+from utils import access_nested_map, get_json
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -29,3 +31,19 @@ class TestAccessNestedMap(unittest.TestCase):
                                          expected):
         """ Test the access to a nested map """
         self.assertRaises(expected)
+
+
+class TestGetJson(unittest.TestCase):
+    """ Test that json can be got """
+
+    @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False})
+    ])
+    def test_get_json(self, test_url, test_payload):
+        """ Test the got json """
+        result = Mock()
+        result.json = Mock(return_value=test_payload)
+        with patch('requests.get', return_value=result):
+            self.assertEqual(get_json(test_url), test_payload)
+            requests.get.assert_called_once_with(test_url)
