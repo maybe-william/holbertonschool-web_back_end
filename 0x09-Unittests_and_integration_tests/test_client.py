@@ -4,7 +4,7 @@
 
 import requests
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 from parameterized import parameterized, parameterized_class
 import utils
 from utils import access_nested_map, get_json, memoize
@@ -26,3 +26,12 @@ class TestGithubOrgClient(unittest.TestCase):
         x = GithubOrgClient(org)
         self.assertEqual(x.org, expected)
         get_patch.assert_called_once_with("https://api.github.com/orgs/"+org)
+
+    def test_public_repos_url(self):
+        """ test that _public_repos_url works """
+        expected = "www.yes.com"
+        payload = {"repos_url": expected}
+        to_mock = 'client.GithubOrgClient.org'
+        with patch(to_mock, PropertyMock(return_value=payload)):
+            cli = GithubOrgClient("x")
+            self.assertEqual(cli._public_repos_url, expected)
