@@ -43,9 +43,10 @@ class TestGithubOrgClient(unittest.TestCase):
         bobb = {"name": "Bobb", "license": {"key": "b"}}
         to_mock = 'client.GithubOrgClient._public_repos_url'
         get_json_mock.return_value = [jeff, bobb]
-        with patch(to_mock, PropertyMock(return_value="www.yes.com")):
+        with patch(to_mock, PropertyMock(return_value="www.yes.com")) as y:
             x = GithubOrgClient("x")
             self.assertEqual(x.public_repos(), ['Jeff', 'Bobb'])
             self.assertEqual(x.public_repos("a"), ['Jeff'])
             self.assertEqual(x.public_repos("c"), [])
             get_json_mock.assert_called_once_with("www.yes.com")
+            y.assert_called_once_with()
