@@ -80,8 +80,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         repos_mock = Mock()
         repos_mock.json = Mock(return_value=repos)
 
-        cls.patch = patch('requests.get')
-        cls.get = cls.patch.start()
+        cls.get_patcher = patch('requests.get')
+        cls.get = cls.get_patcher.start()
 
         options = {cls.org_payload["repos_url"]: repos_mock}
         cls.get.side_effect = lambda y: options.get(y, org_mock)
@@ -89,7 +89,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
     @classmethod
     def tearDownClass(cls):
         """ unprepare for testing """
-        cls.patch.stop()
+        cls.get_patcher.stop()
 
     def test_public_repos(self):
         """ public repos test """
