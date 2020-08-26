@@ -22,8 +22,8 @@ class TestGithubOrgClient(unittest.TestCase):
     ])
     @patch('client.get_json')
     def test_org(self, org, expected, get_patch):
-        get_patch.return_value = expected
         """ Test the org of the client """
+        get_patch.return_value = expected
         x = GithubOrgClient(org)
         self.assertEqual(x.org, expected)
         get_patch.assert_called_once_with("https://api.github.com/orgs/"+org)
