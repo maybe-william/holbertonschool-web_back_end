@@ -98,8 +98,10 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(y.repos_payload, self.repos_payload)
         self.assertEqual(y.public_repos(), self.expected_repos)
         self.assertEqual(y.public_repos("NONEXISTENT"), [])
+        self.get.assert_called_with(self.org_payload["repos_url"])
 
-    def test_public_repos(self):
+    def test_public_repos_with_license(self):
         """ public repos test """
         y = GithubOrgClient("x")
+        self.get.assert_called_with(self.org_payload["repos_url"])
         self.assertEqual(y.public_repos("apache-2.0"), self.apache2_repos)
