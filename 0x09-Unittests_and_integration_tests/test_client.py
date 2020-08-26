@@ -4,7 +4,7 @@
 
 import requests
 import unittest
-from unittest.mock import patch, Mock, PropertyMock
+from unittest.mock import patch, Mock, PropertyMock, call
 from parameterized import parameterized, parameterized_class
 import utils
 from utils import access_nested_map, get_json, memoize
@@ -77,8 +77,10 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         repos = TEST_PAYLOAD[0][1]
         org_mock = Mock()
         org_mock.json = Mock(return_value=org)
+        cls.org_mock = org_mock
         repos_mock = Mock()
         repos_mock.json = Mock(return_value=repos)
+        cls.repos_mock = repos_mock
 
         cls.get_patcher = patch('requests.get')
         cls.get = cls.get_patcher.start()
@@ -100,7 +102,10 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(y.repos_payload, self.repos_payload)
         self.assertEqual(y.public_repos(), self.expected_repos)
         self.assertEqual(y.public_repos("NONEXISTENT"), [])
-        self.get.assert_called_with(self.org_payload["repos_url"])
+        self.get.assert_has_calls([call("https://api.github.com/orgs/x"),
+                                   call(self.org_payload["repos_url"])])
+        self.org_mock.json.assert_called_once_with()
+        self.repos_mock.json.assert_called_once_with()
 
     def test_public_repos_with_license(self):
         """ public repos test """
@@ -109,5 +114,8 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         self.assertEqual(y.org, self.org_payload)
         self.assertEqual(y._public_repos_url, self.org_payload["repos_url"])
         self.assertEqual(y.repos_payload, self.repos_payload)
-        self.get.assert_called_with(self.org_payload["repos_url"])
         self.assertEqual(y.public_repos("apache-2.0"), self.apache2_repos)
+        self.get.assert_has_calls([call("https://api.github.com/orgs/x"),
+                                   call(self.org_payload["repos_url"])])
+        self.org_mock.json.assert_called()
+        self.repos_mock.json.assert_called()
