@@ -35,3 +35,17 @@ class TestGithubOrgClient(unittest.TestCase):
         with patch(to_mock, PropertyMock(return_value=payload)):
             cli = GithubOrgClient("x")
             self.assertEqual(cli._public_repos_url, expected)
+
+    @patch('client.get_json')
+    def test_public_repos(self, get_json_mock):
+        """ test the public repos """
+        jeff = {"name": "Jeff", "license": {"key": "a"}}
+        bobb = {"name": "Bobb", "license": {"key": "b"}}
+        to_mock = 'client.GithubOrgClient._public_repos_url'
+        get_json_mock.return_value = [jeff, bobb]
+        with patch(to_mock, PropertyMock(return_value="www.yes.com")):
+            x = GithubOrgClient("x")
+            self.assertEqual(x.public_repos(), ['Jeff', 'Bobb'])
+            self.assertEqual(x.public_repos("a"), ['Jeff'])
+            self.assertEqual(x.public_repos("c"), [])
+            get_json_mock.assert_called_once_with("www.yes.com")
