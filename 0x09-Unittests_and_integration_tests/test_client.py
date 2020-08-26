@@ -10,6 +10,7 @@ import utils
 from utils import access_nested_map, get_json, memoize
 from client import GithubOrgClient
 import client
+from fixtures import TEST_PAYLOAD
 
 
 class TestGithubOrgClient(unittest.TestCase):
@@ -60,3 +61,36 @@ class TestGithubOrgClient(unittest.TestCase):
     def test_has_license(self, repo, license, expected):
         """ test the license checker """
         self.assertEqual(GithubOrgClient.has_license(repo, license), expected)
+
+
+@parameterized_class(
+    ('org_payload', 'repos_payload', 'expected_repos', 'apache2_repos'),
+    TEST_PAYLOAD
+)
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """ Integration test for github org client """
+
+    @classmethod
+    def setUpClass(cls):
+        """ prepare for testing """
+        org = TEST_PAYLOAD[0][0]
+        repos = TEST_PAYLOAD[0][1]
+        org_mock = Mock()
+        org_mock.json = Mock(return_value=org)
+        repos_mock = Mock()
+        repos_mock.json = Mock(return_value=repos)
+
+        cls.patch = patch('requests.get')
+        cls.get = cls.patch.start()
+
+        options = {cls.org_payload["repos_url"]: repos_mock}
+        cls.get.side_effect = lambda y: options.get(y, org_mock)
+
+    @classmethod
+    def tearDownClass(cls):
+        """ unprepare for testing """
+        cls.patch.stop()
+
+    def test_public_repos(self):
+        """ public repos test """
+        pass
