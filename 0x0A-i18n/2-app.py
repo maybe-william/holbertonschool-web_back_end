@@ -18,7 +18,7 @@ class Config(object):
 
 
 app = Flask(__name__)
-app.config.from_object('1-app.Config')
+app.config.from_object('2-app.Config')
 babel = Babel(app)
 
 
@@ -31,7 +31,7 @@ def get_locale():
 def root_route() -> str:
     """ get the root route
     """
-    return render_template('1-index.html')
+    return render_template('2-index.html')
 
 
 if __name__ == "__main__":
