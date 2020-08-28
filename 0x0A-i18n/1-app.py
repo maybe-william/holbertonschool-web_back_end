@@ -27,7 +27,7 @@ class Config(object):
 
 
 @app.route("/", methods=['GET'], strict_slashes=False)
-def root_route() -> Response:
+def root_route() -> str:
     """ get the root route
     """
     return render_template('1-index.html')
