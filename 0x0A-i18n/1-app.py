@@ -10,11 +10,6 @@ from flask import render_template
 from flask_babel import Babel
 
 
-app = Flask(__name__)
-app.config.from_pyfile('babel.cfg')
-babel = Babel(app)
-
-
 @app.route("/", methods=['GET'], strict_slashes=False)
 def root_route() -> str:
     """ get the root route
@@ -23,4 +18,7 @@ def root_route() -> str:
 
 
 if __name__ == "__main__":
+    app = Flask(__name__)
+    app.config.from_pyfile('babel.cfg')
+    babel = Babel(app)
     app.run(host="0.0.0.0", port="5000")
