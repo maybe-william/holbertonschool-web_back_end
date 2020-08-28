@@ -16,7 +16,7 @@ app.config.from_object('1-app.Config')
 babel = Babel(app)
 
 
-class Config:
+class Config(object):
     """A babel configuration object"""
 
     LANGUAGES = ["en", "fr"]
