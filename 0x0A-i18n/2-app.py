@@ -24,6 +24,7 @@ babel = Babel(app)
 
 @babel.localselector
 def get_locale():
+    """ This is a docstring """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
