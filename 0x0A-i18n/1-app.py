@@ -14,6 +14,12 @@ from flask import Response
 app = Flask(__name__)
 
 
+class Config:
+    """A babel configuration object"""
+
+    LANGUAGES = ["en", "fr"]
+
+
 @app.route("/", methods=['GET'], strict_slashes=False)
 def root_route() -> Response:
     """ get the root route
@@ -22,6 +28,6 @@ def root_route() -> Response:
 
 
 if __name__ == "__main__":
-    app.config.from_pyfile('babel.cfg')
+    app.config.from_object('1-app.Config')
     babel = Babel(app)
     app.run(host="0.0.0.0", port="5000")
