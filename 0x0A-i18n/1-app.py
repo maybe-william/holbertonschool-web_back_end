@@ -8,10 +8,11 @@ import json
 from flask import Flask, jsonify, abort, request, make_response, redirect
 from flask import render_template
 from flask_babel import Babel
+from werkzeug.wrapper import Response
 
 
 @app.route("/", methods=['GET'], strict_slashes=False)
-def root_route() -> str:
+def root_route() -> Response:
     """ get the root route
     """
     return render_template('0-index.html')
