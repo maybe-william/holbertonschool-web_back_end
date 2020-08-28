@@ -8,7 +8,6 @@ import json
 from flask import Flask, jsonify, abort, request, make_response, redirect
 from flask import render_template
 from flask_babel import Babel
-from flask import Response
 
 
 class Config(object):
