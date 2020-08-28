@@ -11,6 +11,7 @@ from flask_babel import Babel
 
 
 app = Flask(__name__)
+app.config.from_pyfile('babel.cfg')
 babel = Babel(app)
 
 
@@ -22,5 +23,4 @@ def root_route() -> str:
 
 
 if __name__ == "__main__":
-    app.config.from_pyfile('babel.cfg')
     app.run(host="0.0.0.0", port="5000")
