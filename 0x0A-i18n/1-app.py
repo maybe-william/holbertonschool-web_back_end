@@ -13,6 +13,8 @@ from flask import Response
 
 app = Flask(__name__)
 app.config.from_object('1-app.Config')
+
+
 babel = Babel(app)
 
 
@@ -28,7 +30,7 @@ class Config(object):
 def root_route() -> Response:
     """ get the root route
     """
-    return render_template('0-index.html')
+    return render_template('1-index.html')
 
 
 if __name__ == "__main__":
