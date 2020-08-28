@@ -11,19 +11,17 @@ from flask_babel import Babel
 from flask import Response
 
 
-app = Flask(__name__)
-app.config.from_object('1-app.Config')
-
-
-babel = Babel(app)
-
-
 class Config(object):
     """A babel configuration object"""
 
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
+
+
+app = Flask(__name__)
+app.config.from_object('1-app.Config')
+babel = Babel(app)
 
 
 @app.route("/", methods=['GET'], strict_slashes=False)
