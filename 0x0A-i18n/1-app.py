@@ -8,7 +8,10 @@ import json
 from flask import Flask, jsonify, abort, request, make_response, redirect
 from flask import render_template
 from flask_babel import Babel
-from werkzeug.wrapper import Response
+from flask import Response
+
+
+app = Flask(__name__)
 
 
 @app.route("/", methods=['GET'], strict_slashes=False)
@@ -19,7 +22,6 @@ def root_route() -> Response:
 
 
 if __name__ == "__main__":
-    app = Flask(__name__)
     app.config.from_pyfile('babel.cfg')
     babel = Babel(app)
     app.run(host="0.0.0.0", port="5000")
