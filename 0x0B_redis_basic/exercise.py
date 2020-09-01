@@ -5,8 +5,23 @@ T h e  R e d i s  E x e r c i s e s  m o d u l e
 """
 
 import redis
+from functools import wraps
 from typing import Union, Optional, Callable
 from uuid import uuid4
+
+
+def count_calls(method: Callable, x: dict = {}) -> Callable:
+    """
+    c o u n t  c a l l s  t o  a  m e t h o d
+    """
+    @wraps(method)
+    def increment_count(self, *args, **kwargs):
+        """
+        i n c r  t h e  c a l l s
+        """
+        self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+    return increment_count
 
 
 class Cache:
@@ -21,6 +36,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         R e t u r n  a  k e y  a f t e r  s t o r i n g  d a t a
