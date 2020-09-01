@@ -3,7 +3,7 @@
 
 
 import redis
-import uuid
+from uuid import uuid4
 from typing import Union
 
 
@@ -17,6 +17,6 @@ class Cache:
 
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """Return a key after storing data"""
-        key = str(uuid.uuid4())
+        key = str(uuid4())
         self._redis.set(key, data)
         return key
