@@ -10,7 +10,7 @@ from typing import Union
 red = redis.Redis()
 
 
-def get_page(url: str) -> Union[str, None]:
+def get_page(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     try:
         text = requests.get(url).text
