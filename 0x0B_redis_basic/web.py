@@ -18,10 +18,8 @@ def call_count(method: Callable) -> Callable:
         """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
         text = method(*args, **kwargs)
         url = args[0]
-        curr_count = red.get("count:"+url)
-        if curr_count is None:
-            curr_count = 0
-        red.setex("count:"+url, 10, int(curr_count) + 1)
+        red.incr("count:"+url, 1)
+        red.expire("count:"+url, 10)
         return text
     return wrap
 
