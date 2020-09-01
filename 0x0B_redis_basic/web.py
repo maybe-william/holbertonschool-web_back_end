@@ -11,9 +11,12 @@ red = redis.Redis()
 
 def get_page(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
-    text = requests.get(url).text
-    curr_count = red.get("count:"+url)
-    if curr_count is None:
-        curr_count = 0
-    red.setex("count:"+url, 10, curr_count + 1)
-    return text
+    try:
+        text = requests.get(url).text
+        curr_count = red.get("count:"+url)
+        if curr_count is None:
+            curr_count = 0
+        red.setex("count:"+url, 10, curr_count + 1)
+        return text
+    except:
+        return None
