@@ -3,7 +3,6 @@
 
 
 import requests
-from lxml import html
 from functools import wraps
 import redis
 from typing import Union, Callable
