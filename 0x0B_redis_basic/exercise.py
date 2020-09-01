@@ -10,6 +10,21 @@ from typing import Union, Optional, Callable
 from uuid import uuid4
 
 
+def replay(method: Callable) -> None:
+    """
+    r e p l a y  a  m e t h o d
+    """
+    red = method.__self__._redis
+    keys = (method.__qualname__+":inputs", method.__qualname__+":outputs")
+    io = list(zip(red.lrange(keys[0], 0, -1), red.lrange(keys[1], 0, -1)))
+    print(method.__qualname__+" was called "+str(len(io))+" times:")
+    for item in io:
+        x = str(item[0].decode())
+        y = str(item[1].decode())
+        print(method.__qualname__+"(*"+x+") -> "+y)
+    return None
+
+
 def call_history(method: Callable) -> Callable:
     """
     k e e p  c a l l s  t o  a  m e t h o d
