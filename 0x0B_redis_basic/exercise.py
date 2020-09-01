@@ -10,7 +10,7 @@ from typing import Union, Optional, Callable
 from uuid import uuid4
 
 
-def call_history(method: Callable, x: dict = {}) -> Callable:
+def call_history(method: Callable) -> Callable:
     """
     k e e p  c a l l s  t o  a  m e t h o d
     """
@@ -26,7 +26,7 @@ def call_history(method: Callable, x: dict = {}) -> Callable:
     return store_args
 
 
-def count_calls(method: Callable, x: dict = {}) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     c o u n t  c a l l s  t o  a  m e t h o d
     """
