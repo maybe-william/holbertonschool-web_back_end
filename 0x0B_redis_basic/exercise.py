@@ -29,14 +29,16 @@ def call_history(method: Callable) -> Callable:
     """
     k e e p  c a l l s  t o  a  m e t h o d
     """
+    qualname = method.__qualname__
+
     @wraps(method)
     def store_args(self, *args, **kwargs):
         """
         i n c r  t h e  c a l l s
         """
-        self._redis.rpush(method.__qualname__+':inputs', str(args))
+        self._redis.rpush(qualname+':inputs', str(args))
         ans = method(self, *args, **kwargs)
-        self._redis.rpush(method.__qualname__+':outputs', ans)
+        self._redis.rpush(qualname+':outputs', ans)
         return ans
     return store_args
 
@@ -45,12 +47,14 @@ def count_calls(method: Callable) -> Callable:
     """
     c o u n t  c a l l s  t o  a  m e t h o d
     """
+    qualname = method.__qualname__
+
     @wraps(method)
     def increment_count(self, *args, **kwargs):
         """
         i n c r  t h e  c a l l s
         """
-        self._redis.incr(method.__qualname__)
+        self._redis.incr(qualname)
         return method(self, *args, **kwargs)
     return increment_count
 
