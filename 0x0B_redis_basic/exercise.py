@@ -10,6 +10,22 @@ from typing import Union, Optional, Callable
 from uuid import uuid4
 
 
+def call_history(method: Callable, x: dict = {}) -> Callable:
+    """
+    k e e p  c a l l s  t o  a  m e t h o d
+    """
+    @wraps(method)
+    def store_args(self, *args, **kwargs):
+        """
+        i n c r  t h e  c a l l s
+        """
+        self._redis.rpush(method.__qualname__+':inputs', str(args))
+        ans = method(self, *args, **kwargs)
+        self._redis.rpush(method.__qualname__+':outputs', ans)
+        return ans
+    return store_args
+
+
 def count_calls(method: Callable, x: dict = {}) -> Callable:
     """
     c o u n t  c a l l s  t o  a  m e t h o d
@@ -36,6 +52,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
