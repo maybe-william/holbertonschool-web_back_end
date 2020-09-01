@@ -3,21 +3,39 @@
 
 
 import requests
+from functools import wraps
 import redis
-from typing import Union
+from typing import Union, Callable
 
 
 red = redis.Redis()
 
 
-def get_page(url: str) -> str:
+def call_count(method: Callable) -> Callable:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
-    try:
-        text = requests.get(url).text
+    @wraps(method)
+    def wrap(*args, **kwargs):
+        """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
+        text = method(*args, **kwargs)
+        url = args[0]
         curr_count = red.get("count:"+url)
         if curr_count is None:
             curr_count = 0
         red.setex("count:"+url, 10, curr_count + 1)
         return text
+    return wrap
+
+
+@call_count
+def get_url(url: str) -> str:
+    """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
+    try:
+        text = requests.get(url).text
+        return text
     except Exception:
         return None
+
+
+def get_page(url: str) -> str:
+    """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
+    return get_url(url)
