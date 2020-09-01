@@ -17,7 +17,7 @@ def my_cache(method: Callable) -> Callable:
     @wraps(method)
     def wrap(*args, **kwargs):
         """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
-        url = args[0]
+        url = kwargs["url"]
         text = red.get(url)
         if text is None:
             text = method(*args, **kwargs)
