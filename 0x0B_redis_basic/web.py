@@ -19,5 +19,5 @@ def get_page(url: str) -> Union[str, None]:
             curr_count = 0
         red.setex("count:"+url, 10, curr_count + 1)
         return text
-    except:
+    except Exception:
         return None
