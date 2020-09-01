@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Redis Exercises module"""
+"""The Redis Exercises module"""
 
 
 import redis
@@ -7,7 +7,7 @@ import uuid
 
 
 class Cache:
-    """The redis cache"""
+    """The redis cache class"""
 
     def __init__(self):
         """Init the redis cache"""
