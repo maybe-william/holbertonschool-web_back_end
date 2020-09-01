@@ -22,9 +22,10 @@ def my_cache(method: Callable) -> Callable:
         text = red.get(url)
         if text is None:
             text = method(*args, **kwargs)
-            red.setex(url, 10, text)
+            if text is not None:
+                red.setex(url, 10, text)
         else:
-            text = text.decode()
+            text = text
         return text
     return wrap
 
@@ -33,7 +34,7 @@ def my_cache(method: Callable) -> Callable:
 def get_url(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     try:
-        text = requests.get(url).text
+        text = requests.get(url).content
         return text
     except Exception:
         return None
