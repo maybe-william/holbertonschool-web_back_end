@@ -25,7 +25,7 @@ def my_cache(method: Callable) -> Callable:
             if text is not None:
                 red.setex(url, 10, text)
         else:
-            text = text
+            text = text.decode()
         return text
     return wrap
 
@@ -34,7 +34,7 @@ def my_cache(method: Callable) -> Callable:
 def get_url(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     try:
-        text = requests.get(url).content
+        text = requests.get(url).text
         return text
     except Exception:
         return None
