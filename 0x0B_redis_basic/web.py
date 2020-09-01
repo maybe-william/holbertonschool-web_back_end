@@ -22,7 +22,8 @@ def my_cache(method: Callable) -> Callable:
         text = red.get(url)
         if text is None:
             text = method(*args, **kwargs)
-        red.setex(url, 10, text)
+            red.setex(url, 10, text)
+            red.expire("count:"+url, 10)
         return text
     return wrap
 
