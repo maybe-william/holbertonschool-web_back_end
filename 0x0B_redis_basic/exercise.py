@@ -5,8 +5,8 @@ T h e  R e d i s  E x e r c i s e s  m o d u l e
 """
 
 import redis
-from uuid import uuid4
 from typing import Union
+from uuid import uuid4
 
 
 class Cache:
