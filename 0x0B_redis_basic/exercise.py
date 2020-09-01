@@ -55,3 +55,15 @@ class Cache:
         if fn is not None:
             return fn(data)
         return data
+
+    def get_str(self, key: str) -> Union[str, bytes, int, float]:
+        """
+        R e t u r n  s t r  d a t a  f o r  k e y
+        """
+        return self.get(key, str)
+
+    def get_int(self, key: str) -> Union[str, bytes, int, float]:
+        """
+        R e t u r n  i n t  d a t a  f o r  k e y
+        """
+        return self.get(key, int)
