@@ -3,6 +3,7 @@
 
 
 import requests
+from lxml import html
 from functools import wraps
 import redis
 from typing import Union, Callable
@@ -32,7 +33,7 @@ def my_cache(method: Callable) -> Callable:
 
 
 @my_cache
-def get_url(url: str) -> bytes:
+def get_url(url: str) -> html:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     try:
         text = requests.get(url).text
