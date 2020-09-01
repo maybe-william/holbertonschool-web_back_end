@@ -34,6 +34,7 @@ def my_cache(method: Callable) -> Callable:
 @my_cache
 def get_url(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
+    return None
     try:
         text = requests.get(url).text
         return text
