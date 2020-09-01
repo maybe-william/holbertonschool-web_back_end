@@ -16,12 +16,12 @@ def call_count(method: Callable) -> Callable:
     @wraps(method)
     def wrap(*args, **kwargs):
         """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
-        text = method(*args, **kwargs)
         url = args[0]
         p = red.pipeline()
         p.incr("count:"+url, 1)
         p.expire("count:"+url, 10)
         p.execute()
+        text = method(*args, **kwargs)
         return text
     return wrap
 
