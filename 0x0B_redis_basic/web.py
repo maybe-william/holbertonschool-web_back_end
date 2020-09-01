@@ -21,7 +21,7 @@ def call_count(method: Callable) -> Callable:
         curr_count = red.get("count:"+url)
         if curr_count is None:
             curr_count = 0
-        red.setex("count:"+url, 10, curr_count + 1)
+        red.setex("count:"+url, 10, int(curr_count) + 1)
         return text
     return wrap
 
