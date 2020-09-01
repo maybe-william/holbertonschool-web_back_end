@@ -9,24 +9,25 @@ from typing import Union, Callable
 
 
 red = redis.Redis()
+red.flushdb()
 
 
-def call_count(method: Callable) -> Callable:
+def my_cache(method: Callable) -> Callable:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     @wraps(method)
     def wrap(*args, **kwargs):
         """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
         url = args[0]
-        p = red.pipeline()
-        p.incr("count:"+url, 1)
-        p.expire("count:"+url, 10)
-        p.execute()
-        text = method(*args, **kwargs)
+        red.incr("count:"+url, 1)
+        text = red.get(url)
+        if text is None:
+            text = method(*args, **kwargs)
+            red.setex(url, 10, text)
         return text
     return wrap
 
 
-@call_count
+@my_cache
 def get_url(url: str) -> str:
     """G e t  a  p a g e  a n d  c o u n t  t i m e s  a c c e s s e d"""
     try:
