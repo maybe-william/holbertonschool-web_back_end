@@ -23,10 +23,10 @@ def my_cache(method: Callable) -> Callable:
             text = method(*args, **kwargs)
             if text is not None:
                 red.setex(url, 10, text)
-                red.incr("count:"+url, 1)
+                red.incr("count:"+url)
         else:
             text = text
-            red.incr("count:"+url, 1)
+            red.incr("count:"+url)
         return text
     return wrap
 
