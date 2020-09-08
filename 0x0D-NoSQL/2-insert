@@ -1,0 +1,2 @@
+// this file inserts into a mongodb
+db.school.insert({name: "Holberton school"})
