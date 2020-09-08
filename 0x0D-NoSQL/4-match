@@ -1,0 +1,2 @@
+// this file finds from a mongodb
+db.school.find({name: "Holberton school"}, {_id: 1, name: 1})
