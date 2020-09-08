@@ -1,2 +1,2 @@
 // this file updates from a mongodb
-db.school.update({name: "Holberton school"}, {$set: {address: "972 Mission street"}}, {many: true})
+db.school.update({name: "Holberton school"}, {$set: {address: "972 Mission street"}}, {upsert: false, many: true})
