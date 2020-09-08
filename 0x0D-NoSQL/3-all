@@ -1,0 +1,2 @@
+// this file finds from a mongodb
+db.school.find()
