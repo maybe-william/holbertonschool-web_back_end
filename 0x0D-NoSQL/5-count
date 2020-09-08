@@ -1,0 +1,2 @@
+// this file counts from a mongodb
+db.school.count()
