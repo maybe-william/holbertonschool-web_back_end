@@ -1,0 +1,2 @@
+// this file shows all databases in mongo
+show dbs
