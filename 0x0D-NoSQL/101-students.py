@@ -12,4 +12,4 @@ def top_students(mongo_collection):
             avg = avg + score
         avg = avg / len(scores)
         student["averageScore"] = avg
-    return sorted(students, key=lambda z: z["averageScore"])
+    return sorted(students, key=lambda z: z["averageScore"], reverse=True)
