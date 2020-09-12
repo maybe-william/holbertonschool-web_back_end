@@ -1,7 +1,7 @@
 export default function createIteratorObject(report) {
   const employees = [];
   for (const x in report.allEmployees) {
-    if (report.allEmployees.hasOwnPropery(x)) {
+    if (x !== 'Some weird value') {
       for (const y of report.allEmployees[x]) {
         employees.push(y);
       }
@@ -21,7 +21,7 @@ export default function createIteratorObject(report) {
           done: false,
         };
       };
-      return next;
+      return { next };
     },
   };
   return obj;
