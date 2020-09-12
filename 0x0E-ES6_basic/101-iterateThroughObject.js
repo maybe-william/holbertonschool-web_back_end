@@ -1,12 +1,14 @@
 export default function iterateThroughObject(reportWithIterator) {
   let first = true;
   let ret = '';
-  for (const x of reportWithIterator) {
+  let res = reportWithIterator[Symbol.iterator]().next();
+  while (!res.done) {
     if (!first) {
-      ret += ' | ';
+      ret = ret.concat(' | ');
     }
-    ret += x.toString();
+    ret = ret.concat(res.value);
     first = false;
+    res = reportWithIterator[Symbol.iterator]().next();
   }
   return ret;
 }
