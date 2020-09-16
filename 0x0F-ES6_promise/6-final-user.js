@@ -7,9 +7,10 @@ export default function handleProfileSignup(firstName, lastName, fileName) {
   return Promise.allSettled([y, x]).then((res) => {
     for (const x of res) {
       if (x.status === 'rejected') {
-        x.value = x.reason;
-        x.reason = undefined;
+        x.value = `Error: ${x.reason.message}`;
+        delete x.reason;
       }
     }
+    return res;
   });
 }
