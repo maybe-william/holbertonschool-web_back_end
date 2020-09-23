@@ -1,8 +1,8 @@
 export const weakMap = new WeakMap();
 export function queryAPI(endpoint) {
-  let calls = weakMap.get(endpoint);
-  if (calls === undefined) {
-    calls = 0;
+  let calls = 0;
+  if (weakMap.has(endpoint)) {
+    calls = weakMap.get(endpoint);
   }
   weakMap.set(endpoint, calls + 1);
   if (calls + 1 >= 4) {
