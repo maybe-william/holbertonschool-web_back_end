@@ -3,6 +3,6 @@ export default function getStudentIdsSum(students) {
     return [];
   }
   let val = 0;
-  val = students.reduce((prev, x) => prev + x.id);
+  val = students.map((x) => x.id).reduce((prev, x) => prev + x);
   return val;
 }
