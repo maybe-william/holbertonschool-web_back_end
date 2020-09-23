@@ -1,6 +1,6 @@
 export default function getStudentIdsSum(students) {
   if (!Array.isArray(students)) {
-    return 0;
+    return [];
   }
   let val = 0;
   val = students.reduce((prev, x) => prev + x.id);
