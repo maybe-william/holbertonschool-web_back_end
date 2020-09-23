@@ -1,5 +1,5 @@
 export const weakMap = new WeakMap();
-export default function queryAPI(endpoint) {
+export function queryAPI(endpoint) {
   let calls = weakMap.get(endpoint);
   if (calls === undefined) {
     calls = 0;
