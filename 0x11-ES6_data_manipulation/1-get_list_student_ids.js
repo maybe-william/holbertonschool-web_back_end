@@ -1,5 +1,8 @@
 export default function getListStudentIds(students) {
-  const arr = [];
-  students.forEach((x) => arr.push(x.id));
+  if (!Array.isArray(students)) {
+    return [];
+  }
+  let arr = [];
+  arr = students.map((x) => x.id);
   return arr;
 }
