@@ -1,5 +1,6 @@
 module.exports = function calculateNumber(type, a, b) {
-  if (isNaN(a) || isNaN(b)) {
+  const validType = type === 'SUM' || type === 'SUBTRACT' || type === 'DIVIDE';
+  if (isNaN(a) || isNaN(b) || !validType) {
     throw new TypeError();
   }
   if (type === 'SUM') {

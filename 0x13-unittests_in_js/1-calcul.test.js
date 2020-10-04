@@ -48,6 +48,6 @@ describe('calculateNumber', function () {
     assert.strictEqual(calculateNumber('DIVIDE', 1.2, 0), 'Error');
   });
   it('should not divide if string is wrong value', function () {
-    assert.strictEqual(calculateNumber('MULTIPLICATE', 1.2, 3.7), 'Error');
+    assert.throws(() => calculateNumber('MULTIPLICATE', 1.2, 3.7), { name: 'TypeError' });
   });
 });
