@@ -14,4 +14,7 @@ describe('calculateNumber', function () {
   it('should work with rounding up from .5', function () {
     assert.strictEqual(calculateNumber(1.5, 3.7), 6);
   });
+  it('should throw error if NaN passed', function () {
+    assert.throws(() => calculateNumber(NaN, 3.7), { name: 'TypeError' });
+  });
 });
